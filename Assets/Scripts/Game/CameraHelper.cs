@@ -25,12 +25,12 @@ public class CameraHelper : MonoBehaviour
     /// Set a GameObject to follow.
     /// </summary>
     public GameObject followTarget;
-    
+
     /// <summary>
     /// Follow the target GameObject?
     /// </summary>
     public bool doFollowTarget = true;
-    
+
     /// <summary>
     /// The managed camera component.
     /// </summary>
@@ -40,12 +40,12 @@ public class CameraHelper : MonoBehaviour
     /// Current resolution we are working with.
     /// </summary>
     private Vector2 mResolution;
-    
+
     /// <summary>
     /// Current target we are working with.
     /// </summary>
     private Vector2 mTarget;
-    
+
     /// <summary>
     /// Called before the first frame update.
     /// </summary>
@@ -53,10 +53,34 @@ public class CameraHelper : MonoBehaviour
     { mCamera = GetComponent<Camera>(); }
 
     /// <summary>
+    /// Center camera position for comfort local multiplayer.
+    /// </summary>
+    private Vector3 defaultCameraPos = new Vector3
+    {
+        x = 0f,
+        y = 1f,
+        z = 0f
+    };
+
+    /// <summary>
     /// Update called once per frame.
     /// </summary>
     void Update()
     {
+        if (GameManager.Instance != null)
+        {
+            // if there is only one player, follow him
+            if (GameManager.Instance.LivingPlayers().Count == 1)
+            {
+                doFollowTarget = true;
+            }
+            // else set camera's position and don't follow any of the players
+            else
+            {
+                doFollowTarget = false;
+                transform.position = defaultCameraPos;
+            }
+        }
         // Fit the camera to the target resolution, if necessary.
         FitTargetResolution(targetResolution);
         // Follow the target, if enabled.
@@ -74,7 +98,7 @@ public class CameraHelper : MonoBehaviour
         // Set the extent of size we want to use.
         var cameraSize = Math.Max(target.x, target.y);
         mCamera.orthographicSize = cameraSize;
-        
+
         // Calculate the current aspect ratio of the screen and the requested target.
         var currentAspectRatio = (float)Screen.width / Screen.height;
         var targetAspectRatio = target.x / target.y;
@@ -111,13 +135,14 @@ public class CameraHelper : MonoBehaviour
         // Safety check...
         if (target == null)
         { return; }
-        
+
         // Move the camera to be above the target's location.
         var currentPosition = transform.position;
         var targetPosition = target.transform.position;
-        transform.position = new Vector3{
-            x = targetPosition.x, 
-            y = currentPosition.y, 
+        transform.position = new Vector3
+        {
+            x = targetPosition.x,
+            y = currentPosition.y,
             z = targetPosition.z
         };
     }

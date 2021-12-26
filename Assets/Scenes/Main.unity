@@ -1580,7 +1580,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 50
@@ -1592,7 +1592,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 112.00001
   orthographic: 1
   orthographic size: 7
   m_Depth: -1
@@ -1672,7 +1672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetResolution: {x: 6, y: 6}
   zoomSpeed: 0.5
-  followTarget: {fileID: 0}
+  followTarget: {fileID: 2023264673}
   doFollowTarget: 1
 --- !u!1 &1439073997
 GameObject:
@@ -2304,12 +2304,17 @@ MonoBehaviour:
   enemyPrefab: {fileID: 474789398741644343, guid: 32da0a68aa2d0b54bb224636b533caf3, type: 3}
   spawnDelay: 1
   spawnEnabled: 1
+--- !u!1 &2023264673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1204133201242880323, guid: 44209977f93d7854bac517dff34087fc, type: 3}
+  m_PrefabInstance: {fileID: 1204133200848054498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2023264680 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1204133201242880330, guid: 44209977f93d7854bac517dff34087fc, type: 3}
   m_PrefabInstance: {fileID: 1204133200848054498}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2023264673}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb4e462afaf487245aaf0b5586ae8a4a, type: 3}
