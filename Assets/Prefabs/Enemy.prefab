@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  speed: 1
+  speed: 0.25
 --- !u!114 &-4849633804381388277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  speed: 1
+  speed: 0.25
 --- !u!1 &4423746658797677556
 GameObject:
   m_ObjectHideFlags: 0
