@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// The main game manager GameObject.
@@ -32,6 +33,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private static GameManager sInstance;
     
+    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI resetText;
+
+
     /// <summary>
     /// Getter for the singleton GameManager object.
     /// </summary>
@@ -50,6 +55,12 @@ public class GameManager : MonoBehaviour
         { sInstance = this; }
     }
 
+    public void GameOver()
+    {
+        gameOverText.gameObject.SetActive(true);
+        resetText.gameObject.SetActive(true);
+    }
+
     /// <summary>
     /// Called before the first frame update.
     /// </summary>
@@ -59,33 +70,58 @@ public class GameManager : MonoBehaviour
         SetupGame();
     }
 
+    // Timer for stopping a game before the restart
+    private float timer = 0;
+    private bool timerReached = false;
+    private bool isPlayerDead = false;
+
+
     /// <summary>
     /// Update called once per frame.
     /// </summary>
     void Update()
     {
-        // Remove any dead players from the list.
-        for (int iii = mLivingPlayers.Count - 1; iii >= 0; --iii)
+        if (!isPlayerDead)
         {
-            var playerGO = mLivingPlayers[iii];
-            var player = playerGO.GetComponent<Player>();
-            
-            if (!player.IsAlive())
+            // Remove any dead players from the list.
+            for (int iii = mLivingPlayers.Count - 1; iii >= 0; --iii)
             {
-                mLivingPlayers.RemoveAt(iii);
-                if (!player.primaryPlayer)
-                { // Only kill non-primary players.
-                    // Update the UI.
-                    var playerUI = Settings.Instance.PlayerUI(player.playerIndex);
-                    playerUI?.GetComponent<HealthUI>()?.SetVisible(false);
-                    
-                    // Update the state.
-                    Settings.Instance.RemovePlayer(playerGO);
-                    Destroy(player.gameObject);
+                var playerGO = mLivingPlayers[iii];
+                var player = playerGO.GetComponent<Player>();
+
+                if (!player.IsAlive())
+                {
+
+                    isPlayerDead = true;
+                    mLivingPlayers.RemoveAt(iii);
+                    if (!player.primaryPlayer)
+                    { // Only kill non-primary players.
+                      // Update the UI.
+                      //var playerUI = Settings.Instance.PlayerUI(player.playerIndex);
+                      //playerUI?.GetComponent<HealthUI>()?.SetVisible(false);
+
+                        // Update the state.
+                        Settings.Instance.RemovePlayer(playerGO);
+                        Destroy(player.gameObject);
+                    }
+                    GameOver();
                 }
             }
         }
-        
+        else
+        {
+            // Start of code by Programmer at https://stackoverflow.com/a/30065183
+            if (!timerReached)
+                timer += Time.deltaTime;
+
+            if (!timerReached && timer > 3.0f)
+            {
+                timerReached = true;
+                ResetGame();
+                isPlayerDead = false;
+            }
+            // End of code by Programmer at https://stackoverflow.com/a/30065183
+        }
         // Update the current list of players.
         UpdatePlayers();
     }
@@ -151,7 +187,7 @@ public class GameManager : MonoBehaviour
         // Check if given player has a UI.
         if (playerUI == null)
         { return; }
-        
+
         // Retrieve the Health UI and display the health.
         var healthUI = playerUI.GetComponent<HealthUI>();
         healthUI.SetVisible(true);
@@ -172,7 +208,7 @@ public class GameManager : MonoBehaviour
         { // Search for the nearest player.
             var playerPosition = player.transform.position;
             var playerDistance = (playerPosition - position).magnitude;
-            
+
             if (playerDistance < closestDistance)
             { closestDistance = playerDistance; closestPlayer = player; }
         }

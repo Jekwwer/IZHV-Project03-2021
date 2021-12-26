@@ -14,7 +14,7 @@ public class CameraHelper : MonoBehaviour
     /// Target camera size in units.
     /// </summary>
     [Header("Global")]
-    public Vector2 targetResolution = new Vector2(4.0f, 4.0f);
+    public Vector2 targetResolution = new Vector2(8.0f, 8.0f);
 
     /// <summary>
     /// How fast should the zooming work?
@@ -50,7 +50,10 @@ public class CameraHelper : MonoBehaviour
     /// Called before the first frame update.
     /// </summary>
     void Start()
-    { mCamera = GetComponent<Camera>(); }
+    {
+        mCamera = GetComponent<Camera>();
+        mCamera.orthographicSize = 8;
+    }
 
     /// <summary>
     /// Center camera position for comfort local multiplayer.
@@ -58,7 +61,7 @@ public class CameraHelper : MonoBehaviour
     private Vector3 defaultCameraPos = new Vector3
     {
         x = 0f,
-        y = 1f,
+        y = 10f,
         z = 0f
     };
 
@@ -69,6 +72,8 @@ public class CameraHelper : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
+            // mCamera = GetComponent<Camera>();
+            // mCamera.orthographicSize = 7;
             // if there is only one player, follow him
             if (GameManager.Instance.LivingPlayers().Count == 1)
             {
@@ -82,7 +87,7 @@ public class CameraHelper : MonoBehaviour
             }
         }
         // Fit the camera to the target resolution, if necessary.
-        FitTargetResolution(targetResolution);
+        // FitTargetResolution(targetResolution);
         // Follow the target, if enabled.
         if (doFollowTarget)
         { FollowTarget(followTarget); }
