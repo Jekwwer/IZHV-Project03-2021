@@ -9,6 +9,8 @@ Solution for the 3rd assignment from the subject _'IZHV (Introduction to Game De
 
 In this exercise, you will enhance a 3D Unity game by implementing various behaviors, integrating the Unity Input System, and adding local multiplayer functionalities.
 
+[Full Assignment Description](http://cphoto.fit.vutbr.cz/ludo/courses/izhv/exercises/e3/)
+
 ---
 
 **Instructions:**
