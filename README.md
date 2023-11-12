@@ -1,68 +1,62 @@
-# IZHV-Exercise03-2021
+# **IZHV-Project03-2021:**
 
-Solution for the 3rd assignment from the course _'[IZHV (Introduction to Game Development)](https://www.fit.vut.cz/study/course/250838/)'_ for the academic year 2021/22 at VUT FIT. \
-Řešení 3. úkolu z předmětu _'[IZHV (Základy herního vývoje)](https://www.fit.vut.cz/study/course/250838/.cs)'_ pro akademický rok 2021/22 na VUT FIT.
+### Input System & Local Multiplayer Functionalities
 
-## Task: Entity Control
+> 🎓 **University**: [VUT FIT](https://www.fit.vut.cz/)
+>
+> 📚 **Course**: [Introduction to Game Development (IZHV)](https://www.fit.vut.cz/study/course/250838/)
+>
+> 📅 **Academic Year**: 2021/22
 
-**Overview:**
+## 🎯 Task Overview:
 
-In this exercise, you will enhance a 3D Unity game by implementing various behaviors, integrating the Unity Input System, and adding local multiplayer functionalities.
+Transform a 3D Unity game project by injecting advanced interactive elements, integrating the Unity Input System for versatile control, and embedding features to support local multiplayer play.
 
-[Full Assignment Description](http://cphoto.fit.vutbr.cz/ludo/courses/izhv/exercises/e3/)
+For the nitty-gritty on the assignment requirements and what’s expected, check out the [Full Assignment Description](http://cphoto.fit.vutbr.cz/ludo/courses/izhv/exercises/e3/).
 
----
+### **Step-by-Step Instructions:**
 
-**Instructions:**
+📥 1. **Foundation Preparation:**
 
-1. **Setup:**
+- Obtain the initial game structure from the Materials section provided.
+- Operate exclusively in the 3D perspective, in line with the game's design.
+- Familiarize with the primary maneuvering system:
+  - 🏃‍♂️ **WASD**: Movement
+  - 🎯 **Mouse**: Aiming
+  - 🔫 **Left Mouse Button**: Firing
+  - ⚔️ **Space**: Alternate Attack Modes
 
-   - Download the project template from the Materials section.
-   - Ensure you're working in 3D view, as this template is built for 3D gameplay.
-   - Familiarize yourself with the default control scheme:
-     - **WASD**: Movement
-     - **Mouse**: Aiming
-     - **Left Mouse Button**: Shoot
-     - **Space**: Switch Mode of Fire
+🔧 2. **Enhancing Interaction Mechanics:**
 
-2. **Gun and Enemy Behavior:**
+- Proceed to 📄 [`Scripts/Game/Gun.cs`](Assets/Scripts/Game/Gun.cs).
+- Tweak the bullet instantiation to occur at the weapon's location by adjusting the `ShootGun` sequence (line 187).
+- Create a distinct alternative firing option using `<SPACE>`, ensuring it provides a new gameplay mechanic.
 
-   _Gun Behavior_:
+- Activate the `EnemySpawner` along with `MultipleSpawners` in the gameplay area.
+- Currently, adversaries exhibit basic behavior. It is your task to program them to actively pursue the closest player.
+- Embed a basic level of intelligence in the 🧠 `FixedUpdate` routine found in [`Scripts/Game/Enemy.cs`](Assets/Scripts/Game/Enemy.cs) (line 60), to allow opponents to follow players.
 
-   - Navigate to `Scripts/Game/Gun.cs`.
-   - Observe that bullets currently spawn at the origin rather than the gun's position. Correct this by modifying the `ShootGun` method (line 187).
-   - Implement a secondary firing mode, activated by `<SPACE>`. This mode should distinctly differ from the primary firing mode.
+⚙️ 3. **Control Scheme Innovation:**
 
-   _Enemy Behavior_:
+- Navigate to [`Input/PlayerInput.inputactions`](Assets/Input/PlayerInput.inputactions) and formulate a new control scheme.
+- Introduce alternative key bindings for the main actions:
+  - 🕹️ **Left Stick**: Move
+  - 🎮 **Right Stick**: Aim
+  - 🔫 **South Button/Right Trigger**: Fire
+  - 🔄 **North Button**: Change Attack Mode
+- Without a physical controller, enable the `VirtualController` under the Canvas GameObject or opt for keyboard backups (like UHJK for movement).
+- Make sure that the `PlayerInput` setup on [`Prefabs/Player.prefab`](Assets/Prefabs/Player.prefab) is compatible with all control schemes and can switch automatically.
 
-   - Activate the `EnemySpawner` and `MultipleSpawners` in the scene.
-   - Notice that spawned enemies lack interesting behavior. Your task is to make them pursue the nearest player.
-   - Implement a simple AI in the `FixedUpdate` method within `Scripts/Game/Enemy.cs` (line 60), allowing enemies to follow players.
+👬 4. **Multiplayer Integration:**
 
-3. **Alternative Control Scheme:**
+- Adapt the game settings to accommodate multiple players with the alternate control scheme.
+- Deploy the `Player Input Manager Component` within the game's environment for managing player entries and exits.
+- Monitor player join or leave actions through the 📊 `Settings` script in [`Scripts/Game/Settings.cs`](Assets/Scripts/Game/Settings.cs) (line 100).
+- Trigger the appearance of a second player upon any action taken using the secondary controls.
 
-   - Go to `Input/PlayerInput.inputactions` and create a secondary control scheme.
-   - Add secondary bindings for primary actions using the following:
-     - **Left Stick**: Movement
-     - **Right Stick**: Aiming
-     - **South Button/Right Trigger**: Shoot
-     - **North Button**: Switch Mode of Fire
-   - If you lack a controller, activate the `VirtualController` under the Canvas GameObject or use keyboard alternatives (e.g., UHJK for movement).
-   - Ensure the `PlayerInput` Component on `Prefabs/Player.prefab` supports all available schemes and has auto-switching enabled.
-   - If issues arise, consider re-importing assets via the right-click menu in the Project/Assets window.
+## 📊 Evaluation Results
 
-4. **Local Multiplayer:**
+The project successfully fulfilled the requirements.
 
-   - Adjust the game to allow the new control scheme to cater to multiple players simultaneously instead of controlling the main player.
-   - Introduce the Player Input Manager Component to the scene. Player additions and removals are managed automatically.
-   - To detect player joining or exiting, refer to the `Settings` script at `Scripts/Game/Settings.cs` (line 100).
-   - The secondary player should spawn when any button in the secondary control scheme is pressed.
-   - For additional guidance, consult Unity's official documentation on local multiplayer.
-
-## Result
-
-TBD
-
-## Evaluation
-
-Total points: **6/6**
+🟢🟢🟢🟢🟢  
+**Total Points: 6/6**
